@@ -1,0 +1,48 @@
+/* Reset and box sizing */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Set background and full screen */
+  body, html {
+    width: 100%;
+    height: 100%;
+    background-color: #121212; /* Dark background for better model visibility */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden;
+  }
+  
+  /* 3D canvas styling */
+  canvas#canvas {
+    width: 100vw;
+    height: 100vh;
+    display: block;
+    background-color: #000; /* Fallback black background */
+  }
+  
+  /* Optional: Add a loading spinner or overlay */
+  #loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 1.2rem;
+    display: none;
+  }
+  
+  /* Optional: Hand gesture overlay UI */
+  #gesture-info {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 10px 14px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    border-radius: 8px;
+    font-size: 14px;
+    z-index: 10;
+  }
+  

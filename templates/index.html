@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>3D Model Viewer</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+
+  <script type="module" src="{{ url_for('static', filename='js/viewer.js') }}"></script>
+  <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+  <script>
+    // Connect to the backend socket
+    const socket = io();
+
+    // Show a message if no hand data is received after 5 seconds
+    let handDataReceived = false;
+    setTimeout(() => {
+      if (!handDataReceived) {
+        const msg = document.createElement('div');
+        msg.textContent = 'No hand data received. Make sure your webcam is working and the backend is running.';
+        msg.style.color = 'red';
+        msg.style.position = 'absolute';
+        msg.style.top = '10px';
+        msg.style.left = '10px';
+        msg.style.background = 'white';
+        msg.style.padding = '8px';
+        msg.style.border = '1px solid #ccc';
+        document.body.appendChild(msg);
+      }
+    }, 5000);
+
+    // Listen for hand data
+    socket.on('hand_data', (data) => {
+      handDataReceived = true;
+      if (data.length > 0) {
+        console.log("Received hand landmarks:", data);
+
+        // Example: log index finger tip
+        const indexTip = data[0][8];  // Landmark 8 is the tip of index finger
+        console.log("Index finger tip:", indexTip);
+
+        // TODO: Use this to control your 3D model position, rotation, etc.
+      } else {
+        console.log("No hand detected");
+      }
+    });
+
+    socket.on('connect_error', (err) => {
+      console.error('Socket.IO connection error:', err);
+    });
+  </script>
+  <script src="{{ url_for('static', filename='js/hand-control.js') }}"></script>
+
+</body>
+</html>
